@@ -1,0 +1,53 @@
+.green {
+  color: green;
+}
+
+body {
+  background-color: lightgrey;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.nav {
+  background-color: grey;
+  height: 4rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-title {
+  font-size: 2rem;
+  margin: auto 20px;
+}
+
+.nav-log {
+  font-size: 1.2rem;
+  margin: auto 20px;
+}
+
+.client-issues {
+  padding-left: 20px;
+  background-color: rgb(199, 29, 29);
+}
+
+.search {
+  display: flex;
+}
+
+.search-bar {
+  font-size: 1.5rem;
+  height: 3rem;
+  width: 25rem;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 5px 5px 10px;
+  margin: 40px auto;
+  background-color: white;
+}
+
+.search-bar:focus {
+  outline: none;
+}

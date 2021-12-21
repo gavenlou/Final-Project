@@ -13,3 +13,11 @@ app.listen(process.env.PORT, () => {
   // eslint-disable-next-line no-console
   console.log(`express server listening on port ${process.env.PORT}`);
 });
+
+app.get('/', (req, res, next) => {
+  return 'test';
+});
+
+app.get('/league/summoner/:IGN', (req, res, next) => {
+
+});
