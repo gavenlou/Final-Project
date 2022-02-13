@@ -1,5 +1,4 @@
 import React from 'react';
-import Search from './search';
 
 export default function Home(props) {
   return (
@@ -11,7 +10,6 @@ export default function Home(props) {
       <div className="client-issues">
         No Current Client Issues.
       </div>
-      <Search />
     </div>
   );
 }
