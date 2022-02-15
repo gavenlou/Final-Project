@@ -48,6 +48,12 @@ a {
   background-color: white;
 }
 
+.search-nav-bar {
+  font-size: 1.2rem;
+  margin: auto;
+  height: 2.5rem;
+}
+
 .search-bar:focus {
   outline: none;
 }

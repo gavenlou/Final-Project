@@ -26,6 +26,23 @@ export default class SearchResult extends React.Component {
           });
         }
       });
+    window.addEventListener('hashchange', () => {
+      this.setState({
+        search: window.location.hash.split('IGN=')[1]
+      });
+      fetch(`${leagueSummon}${this.state.search}?api_key=${TOKEN}`)
+        .then(res => {
+          return res.json();
+        })
+        .then(data => {
+          if (data) {
+            this.setState({
+              summoner: data,
+              loading: false
+            });
+          }
+        });
+    });
   }
 
   render() {
@@ -34,8 +51,16 @@ export default class SearchResult extends React.Component {
         <p>Loading</p>
       );
     } else {
-      const { puuid, name, profileIconId, summonerLevel, err } = this.state.summoner;
       return (
+        <Summ summoner={this.state.summoner}/>
+      );
+    }
+  }
+}
+
+function Summ(props) {
+  const { puuid, name, profileIconId, summonerLevel, err } = props.summoner;
+  return (
         <a>
         <div>
           <p>{err}</p>
@@ -45,7 +70,5 @@ export default class SearchResult extends React.Component {
           <p>{summonerLevel}</p>
         </div>
         </a>
-      );
-    }
-  }
+  );
 }
