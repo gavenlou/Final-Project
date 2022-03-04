@@ -1,6 +1,7 @@
 import TOKEN from '../../server/key';
 import React from 'react';
 const leagueSummon = 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/';
+const controller = new AbortController();
 
 export default class SearchResult extends React.Component {
   constructor(props) {
@@ -28,7 +29,8 @@ export default class SearchResult extends React.Component {
       });
     window.addEventListener('hashchange', () => {
       this.setState({
-        search: window.location.hash.split('IGN=')[1]
+        search: window.location.hash.split('IGN=')[1],
+        loading: true
       });
       fetch(`${leagueSummon}${this.state.search}?api_key=${TOKEN}`)
         .then(res => {
@@ -42,8 +44,12 @@ export default class SearchResult extends React.Component {
             });
           }
         });
-    });
+    }, { signal: controller.signal });
   }
+
+  // componentWillUnmount() {
+  //   controller.abort();
+  // }
 
   render() {
     if (this.state.loading) {
@@ -59,14 +65,15 @@ export default class SearchResult extends React.Component {
 }
 
 function Summ(props) {
-  const { puuid, name, profileIconId, summonerLevel, err } = props.summoner;
+  const { puuid, name, summonerLevel, err } = props.summoner;
+  const profileIcon = `http://localhost:3001/summoner/icon/${props.summoner.profileIconId}`;
   return (
         <a>
         <div>
           <p>{err}</p>
           <p>{puuid}</p>
           <p>{name}</p>
-          <p>{profileIconId}</p>
+          <img src={profileIcon} alt="Summoner Icon" className="summIcon" />
           <p>{summonerLevel}</p>
         </div>
         </a>
