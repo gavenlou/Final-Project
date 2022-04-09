@@ -4,7 +4,7 @@ const express = require('express');
 const ClientError = require('./client-error');
 const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
-const getMastery = require('./mastery');
+const fs = require('fs');
 
 const app = express();
 
@@ -12,9 +12,9 @@ app.use(staticMiddleware);
 
 app.use(errorMiddleware);
 
-app.listen(process.env.PORT, () => {
+app.listen((process.env.PORT || 3001), () => {
   // eslint-disable-next-line no-console
-  console.log(`express server listening on port ${process.env.PORT}`);
+  console.log(`express server listening on port ${process.env.PORT || 3001}`);
 });
 
 app.get('/summoner/icon/:id', (req, res, next) => {
@@ -73,8 +73,20 @@ app.get('/summoner/border/:id', (req, res, next) => {
 app.get('/summoner/mastery/:id', async (req, res, next) => {
   try {
     const summMastery = req.params.id;
-    const champions = await getMastery(summMastery);
-    res.status(200).send(champions);
+    let champions = 'Test';
+    fs.readFile(path.join(__dirname, '/Data Dragon/11.24.1/data/en_US/champion.json'), 'utf8', (err, data) => {
+      if (err) {
+        return err;
+      } else {
+        const champ = JSON.parse(data);
+        for (const x in champ.data) {
+          if (champ.data[x].key === summMastery) {
+            champions = x;
+          }
+        }
+        res.status(200).send(champions);
+      }
+    });
   } catch (err) {
     throw new ClientError('500', 'Summoner Mastery not found.', err);
   }
