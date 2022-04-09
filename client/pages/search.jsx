@@ -27,13 +27,13 @@ export default class Search extends React.Component {
     if (window.location.hash.includes('summoner')) {
       return (
         <div className="search">
-          <input id="search" onChange={this.handleChange} className="search-nav-bar" type="text" placeholder="Search League Username..."></input>
+          <input id="search" onChange={this.handleChange} className="search-nav-bar" type="text" placeholder="Search League Username..." autoComplete='off'></input>
         </div>
       );
     } else {
       return (
         <div className="search">
-          <input id="search" onChange={this.handleChange} className="search-bar" type="text" placeholder="Search League Username..."></input>
+          <input id="search" onChange={this.handleChange} className="search-bar" type="text" placeholder="Search League Username..." autoComplete='off'></input>
         </div>
       );
     }

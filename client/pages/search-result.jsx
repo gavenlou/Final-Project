@@ -65,17 +65,21 @@ export default class SearchResult extends React.Component {
 }
 
 function Summ(props) {
-  const { puuid, name, summonerLevel, err } = props.summoner;
+  const { id, name, summonerLevel } = props.summoner;
   const profileIcon = `http://localhost:3001/summoner/icon/${props.summoner.profileIconId}`;
+  const profileBorder = `http://localhost:3001/summoner/border/${props.summoner.summonerLevel}`;
   return (
-        <a>
-        <div>
-          <p>{err}</p>
-          <p>{puuid}</p>
-          <p>{name}</p>
-          <img src={profileIcon} alt="Summoner Icon" className="summIcon" />
-          <p>{summonerLevel}</p>
+        <div className='summ-info'>
+          <div className='summ-Img'>
+            <img src={profileIcon} alt="Summoner Icon" className="summ-icon" />
+            <img src={profileBorder} alt="Summoner Icon" className="summ-border" />
+            <p className='summ-level'>{summonerLevel}</p>
+          </div>
+          <div>
+            <p className='summ-Name'>{name}</p>
+            <p>{id}</p>
+            <p>{summonerLevel}</p>
+          </div>
         </div>
-        </a>
   );
 }

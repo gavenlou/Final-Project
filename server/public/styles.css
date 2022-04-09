@@ -57,3 +57,35 @@ a {
 .search-bar:focus {
   outline: none;
 }
+
+.summ-info {
+  margin: 50px 100px;
+  background-color: azure;
+  display: flex;
+  justify-content: center;
+}
+
+.summ-icon {
+  height: 7em;
+  border-radius: 100%;
+}
+
+.summ-border {
+  max-height: 11em;
+  position: absolute;
+  z-index: 1;
+  transform: translate(-9em, -2.05em);
+}
+
+.summ-level {
+  font-family: Roboto, sans-serif;
+  text-align: center;
+  position: absolute;
+  width: 2em;
+  font-size: 0.7em;
+  background-color: black;
+  color: white;
+  transform: translate(3.95em, -2.2em);
+  z-index: 2;
+  border-radius: 30%;
+}
