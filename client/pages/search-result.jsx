@@ -28,18 +28,27 @@ export default class SearchResult extends React.Component {
             summoner: data
           });
         }
-      });
-    fetch(`${leagueMastery}${this.state.summoner.id}?api_key=${TOKEN}`)
+        return fetch(`${leagueMastery}${this.state.summoner.id}?api_key=${TOKEN}`);
+      })
       .then(res => {
         return res.json();
       })
-      .then(data => {
-        if (data) {
-          this.setState({
-            mastery: data,
-            loading: false
-          });
-        }
+      .then(r => {
+        // change this from setstate to a variable
+        this.setState({
+          mastery: r
+        });
+        return fetch(`http://localhost:3001/summoner/mastery/${this.state.mastery[0].championId}`);
+      })
+      .then(res => res.json())
+      .then(m => {
+        this.setState({
+          mastery: m,
+          loading: false
+        });
+      })
+      .catch(err => {
+        console.error('Request Failed', err);
       });
     window.addEventListener('hashchange', () => {
       this.setState({
@@ -91,10 +100,9 @@ export default class SearchResult extends React.Component {
 
 function Summ(props) {
   const { id, name, summonerLevel } = props.summoner;
-  const { mastery } = props.mastery;
   const profileIcon = `http://localhost:3001/summoner/icon/${props.summoner.profileIconId}`;
   const profileBorder = `http://localhost:3001/summoner/border/${props.summoner.summonerLevel}`;
-  // const profileMastery = `http://localhost:3001/summoner/mastery/${props.mastery.}`
+  const profileMastery = props.mastery;
   return (
         <div className='summ-info'>
           <div className='summ-Img'>
@@ -105,7 +113,7 @@ function Summ(props) {
           <div>
             <p className='summ-Name'>{name}</p>
             <p>{id}</p>
-            <p>{mastery}</p>
+            <p>{profileMastery}</p>
             <p>{summonerLevel}</p>
           </div>
         </div>

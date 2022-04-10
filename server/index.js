@@ -17,6 +17,11 @@ app.listen((process.env.PORT || 3001), () => {
   console.log(`express server listening on port ${process.env.PORT || 3001}`);
 });
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
+  next();
+});
+
 app.get('/summoner/icon/:id', (req, res, next) => {
   const id = req.params.id;
   let pathIcon = '';
@@ -32,7 +37,7 @@ app.get('/summoner/icon/:id', (req, res, next) => {
   });
 });
 
-app.get('/summoner/border/:id', (req, res, next) => {
+app.get('/summoner/border/:id ', (req, res, next) => {
   const id = req.params.id;
   let pathBorder = '';
   switch (true) {
@@ -70,11 +75,11 @@ app.get('/summoner/border/:id', (req, res, next) => {
   });
 });
 
-app.get('/summoner/mastery/:id', async (req, res, next) => {
+app.get('/summoner/mastery/:id', (req, res, next) => {
   try {
     const summMastery = req.params.id;
     let champions = 'Test';
-    fs.readFile(path.join(__dirname, '/Data Dragon/11.24.1/data/en_US/champion.json'), 'utf8', (err, data) => {
+    fs.readFile(path.join(__dirname, '/Data Dragon/12.5.1/data/en_US/champion.json'), 'utf8', (err, data) => {
       if (err) {
         return err;
       } else {
@@ -84,7 +89,7 @@ app.get('/summoner/mastery/:id', async (req, res, next) => {
             champions = x;
           }
         }
-        res.status(200).send(champions);
+        res.status(200).json(champions);
       }
     });
   } catch (err) {
